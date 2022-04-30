@@ -1,0 +1,8 @@
+description: >
+  This command installs WireGuard.
+
+steps:
+  - run:
+      shell: bash
+      name: Installing WireGuard
+      command: <<include(scripts/install.sh)>>
