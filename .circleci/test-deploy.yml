@@ -15,29 +15,29 @@ jobs:
       machine:
         image: ubuntu-2004:202201-02
       steps:
-        - wireguard/install
+        - wireguard/setup:
+            config-var: WG_CONFIG_LIN
     command-tests-windows:
       executor:
         name: win/default
       steps:
-        - wireguard/install
+        - wireguard/install:
+            config-var: WG_CONFIG_WIN	
     command-tests-macos:
       macos:
         xcode: "13.3.0"
       steps:
-        - wireguard/install
+        - wireguard/install:
+            config-var: WG_CONFIG_MAC
 workflows:
   test-deploy:
     jobs:
       # Make sure to include "filters: *filters" in every test job you want to run as part of your deployment.
       - command-tests-linux:
-          config-var: WG_CONFIG_LIN
           filters: *filters
       - command-tests-macos:
-          config-var: WG_CONFIG_MAC	
           filters: *filters
       - command-tests-windows:
-          config-var: WG_CONFIG_WIN	
           filters: *filters
       - orb-tools/pack:
           filters: *filters
