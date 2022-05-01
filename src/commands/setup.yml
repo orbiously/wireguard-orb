@@ -1,0 +1,15 @@
+description: >
+  This command installs and configures WireGuard.
+
+parameters:
+  config-var:
+    type: env_var_name
+    default: WG_CONFIG
+
+steps:
+  - run:
+      shell: bash
+      environment:
+        CONFIG: << parameters.config-var >>
+      name: Installing & Configuring WireGuard
+      command: <<include(scripts/setup.sh)>>

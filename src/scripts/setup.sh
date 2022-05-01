@@ -1,25 +1,23 @@
 #!/bin/bash
-identify() {
-  case $1 in
-    [Ll]inux*)
-      if [ -f /.dockerenv ]; then
-        EXECUTOR=docker
-        exit 1
-      else
-        EXECUTOR=linux
-      fi
-      PLATFORM=Linux
-      ;;
-    [Dd]arwin*)
-      PLATFORM=macOS
-      EXECUTOR=macos
-      ;;
-    msys*|MSYS*|nt|win*)
-      PLATFORM=Windows
-      EXECUTOR=windows
-      ;;
-  esac
-}
+case "$(uname)" in
+  [Ll]inux*)
+    if [ -f /.dockerenv ]; then
+      EXECUTOR=docker
+      exit 1
+    else
+      EXECUTOR=linux
+    fi
+    PLATFORM=Linux
+    ;;
+  [Dd]arwin*)
+    PLATFORM=macOS
+    EXECUTOR=macos
+    ;;
+  msys*|MSYS*|nt|win*)
+    PLATFORM=Windows
+    EXECUTOR=windows
+    ;;
+esac
 
 install-Linux() {
   printf "Installing WireGuard for Linux\n\n"
@@ -38,10 +36,24 @@ install-Windows() {
   choco install wireguard
 }
 
-identify "$(uname)"
-install-$PLATFORM
+configure-Linux() {
+  echo "$CONFIG" | sudo bash -c 'base64 --decode > /etc/wireguard/wg0.conf'
+}
 
+configure-macOS() {
+  echo "$CONFIG" | sudo bash -c 'base64 --decode > /tmp/wg0.conf'
+}
+
+configure-Windows() {
+  echo "$CONFIG" | base64 --decode > "C:\tmp\wg0.conf"
+}
+
+install-$PLATFORM
 printf "\nWireGuard for %s installed\n\n" "$PLATFORM"
+
+configure-$PLATFORM
+printf "\nWireGuard for %s configured\n\n" "$PLATFORM"
+
 printf "\nPublic IP before VPN connection is %s\n" "$(curl http://checkip.amazonaws.com)"
 echo "export PLATFORM=$PLATFORM" >> "$BASH_ENV"
 echo "export EXECUTOR=$EXECUTOR" >> "$BASH_ENV"
