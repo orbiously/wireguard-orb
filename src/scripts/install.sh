@@ -38,7 +38,7 @@ install-Windows() {
   choco install wireguard
 }
 
-identify
+identify "$(uname)"
 install-$PLATFORM
 
 printf "\nWireGuard for %s installed\n\n" "$PLATFORM"
