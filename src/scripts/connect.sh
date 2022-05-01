@@ -79,6 +79,11 @@ connect-linux() {
   done
 
   sudo wg-quick up wg0
+
+  until ping -c1 10.0.0.1; do
+    echo "Attempting to connect..."
+    sleep 1;
+  done
 }
 
 connect-macos() {
@@ -133,6 +138,11 @@ EOF
   until sudo launchctl list | grep wireguard; do
     sleep 1
   done
+
+  until ping -c1 10.0.0.1; do
+    echo "Attempting to connect..."
+    sleep 2;
+  done
 }
 
 connect-windows() {
@@ -142,14 +152,15 @@ connect-windows() {
   route add "$ET_phone_home" MASK 255.255.255.255 "$DEFAULT_GW"
 
   /c/progra~1/wireguard/wireguard.exe //installtunnelservice "C:\tmp\wg0.conf"
+
+  until ping -n 1 10.0.0.1; do
+    echo "Attempting to connect..."
+    sleep 1;
+  done
 }
 
 connect-"$EXECUTOR"
 
-until ping -n 1 10.0.0.1; do
-  echo "Attempting to connect..."
-  sleep 2;
-done
 echo "Connected to WireGuard"
 printf "\nPublic IP is now %s\n" "$(curl -s http://checkip.amazonaws.com)"
 
