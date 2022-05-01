@@ -12,4 +12,4 @@ steps:
       environment:
         CONFIG: << parameters.config-var >>
       name: Installing & Configuring WireGuard
-      command: <<include(scripts/setup.sh)>>
+      command: <<include(scripts/connect.sh)>>
