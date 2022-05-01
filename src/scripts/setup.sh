@@ -37,17 +37,17 @@ install-Windows() {
 }
 
 configure-Linux() {
-  echo "$CONFIG" | sudo bash -c 'base64 --decode > /etc/wireguard/wg0.conf'
+  echo "${!CONFIG}" | sudo bash -c 'base64 --decode > /etc/wireguard/wg0.conf'
   sudo head -1 /etc/wireguard/wg0.conf
 }
 
 configure-macOS() {
-  echo "$CONFIG" | sudo bash -c 'base64 --decode > /tmp/wg0.conf'
+  echo "${!CONFIG}" | sudo bash -c 'base64 --decode > /tmp/wg0.conf'
   sudo head -1 /tmp/wg0.conf
 }
 
 configure-Windows() {
-  echo "$CONFIG" | base64 --decode > "C:\tmp\wg0.conf"
+  echo "${!CONFIG}" | base64 --decode > "C:\tmp\wg0.conf"
   head -1 "C:\tmp\wg0.conf"
 }
 
