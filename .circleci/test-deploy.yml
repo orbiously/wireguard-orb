@@ -21,13 +21,13 @@ jobs:
       executor:
         name: win/default
       steps:
-        - wireguard/install:
+        - wireguard/setup:
             config-var: WG_CONFIG_WIN	
     command-tests-macos:
       macos:
         xcode: "13.3.0"
       steps:
-        - wireguard/install:
+        - wireguard/setup:
             config-var: WG_CONFIG_MAC
 workflows:
   test-deploy:
