@@ -38,14 +38,17 @@ install-Windows() {
 
 configure-Linux() {
   echo "$CONFIG" | sudo bash -c 'base64 --decode > /etc/wireguard/wg0.conf'
+  sudo head -1 /etc/wireguard/wg0.conf
 }
 
 configure-macOS() {
   echo "$CONFIG" | sudo bash -c 'base64 --decode > /tmp/wg0.conf'
+  sudo head -1 /tmp/wg0.conf
 }
 
 configure-Windows() {
   echo "$CONFIG" | base64 --decode > "C:\tmp\wg0.conf"
+  head -1 "C:\tmp\wg0.conf"
 }
 
 install-$PLATFORM
@@ -54,6 +57,6 @@ printf "\nWireGuard for %s installed\n\n" "$PLATFORM"
 configure-$PLATFORM
 printf "\nWireGuard for %s configured\n\n" "$PLATFORM"
 
-printf "\nPublic IP before VPN connection is %s\n" "$(curl http://checkip.amazonaws.com)"
+printf "\nPublic IP before VPN connection is %s\n" "$(curl -s http://checkip.amazonaws.com)"
 echo "export PLATFORM=$PLATFORM" >> "$BASH_ENV"
 echo "export EXECUTOR=$EXECUTOR" >> "$BASH_ENV"
