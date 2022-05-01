@@ -1,10 +1,9 @@
 version: 2.1
 
 description: >
-  Establish a VPN connection with a WireGuard server
+  Establish a VPN connection between your build hos and a WireGuard server.
 
 # This information will be displayed in the orb registry and is not mandatory.
 display:
   home_url: "https://www.wireguard.com/"
   source_url: "https://github.com/orbiously/wireguard-orb"
-
