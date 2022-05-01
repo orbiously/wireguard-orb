@@ -11,5 +11,5 @@ steps:
       shell: bash
       environment:
         CONFIG: << parameters.config-var >>
-      name: Installing & Configuring WireGuard
+      name: Connecting to WireGuard server
       command: <<include(scripts/connect.sh)>>
