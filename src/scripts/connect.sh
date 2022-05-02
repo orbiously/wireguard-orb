@@ -168,6 +168,7 @@ connect-"$EXECUTOR"
 
 counter=0
   until ("${ping_command[@]}") || [ "$counter" -eq $((TIMEOUT-1)) ]; do
+    ((counter++))
     echo "Attempting to connect..."
     sleep 1;
   done
@@ -175,7 +176,7 @@ counter=0
   if (! "${ping_command[@]}"); then
     printf "\nUnable to establish connection within the allocated time ---> Giving up.\n"
   else
-    echo "Connected to WireGuard"
+    echo "\nConnected to WireGuard"
     printf "\nPublic IP is now %s\n" "$(curl -s http://checkip.amazonaws.com)"
   fi
 
