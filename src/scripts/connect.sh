@@ -9,19 +9,19 @@ case "$(uname)" in
     fi
     PLATFORM=Linux
     ping_command=(ping -c1 "$WG_SRV_IP")
-    check_install=(wg --version 2>/dev/null)
+    check_install=(wg --version)
     ;;
   [Dd]arwin*)
     PLATFORM=macOS
     EXECUTOR=macos
     ping_command=(ping -n 1 "$WG_SRV_IP")
-    check_install=(wg --version 2>/dev/null)
+    check_install=(wg --version)
     ;;
   msys*|MSYS*|nt|win*)
     PLATFORM=Windows
     EXECUTOR=windows
     ping_command=(ping -c1 "$WG_SRV_IP")
-    check_install=(/c/progra~1/wireguard/wg.exe --version 2>/dev/null)
+    check_install=(/c/progra~1/wireguard/wg.exe --version)
     ;;
 esac
 
@@ -57,7 +57,7 @@ configure-Windows() {
   echo "${!CONFIG}" | base64 --decode > "C:\tmp\wg0.conf"
 }
 
-if "${check_install[@]}"; then
+if "${check_install[@]}" 2>/dev/null; then
   printf "WireGuard is already installed\n"
 else
   install-$PLATFORM
