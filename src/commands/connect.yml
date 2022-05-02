@@ -1,15 +1,21 @@
 description: >
-  This command installs and configures WireGuard.
+  This command installs (if needed), configures, and connects the WireGuard client to the WireGuard server.
 
 parameters:
-  config-var:
+  config-var: 
+    description: Name of the environment variable containing the base64-encoded WireGuard client configuration file.
     type: env_var_name
     default: WG_CONFIG
+  wg-server-ip:
+    description: WireGuard (private) IP address of the WireGuard server.
+    type: string
+    default: "10.0.0.1"
 
 steps:
   - run:
       shell: bash
       environment:
         CONFIG: << parameters.config-var >>
+        WG-SRV-IP: << parameters.wg-server-ip >>
       name: Connecting to WireGuard server
       command: <<include(scripts/connect.sh)>>
