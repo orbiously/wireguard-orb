@@ -16,6 +16,6 @@ steps:
       shell: bash
       environment:
         CONFIG: << parameters.config-var >>
-        WG-SRV-IP: << parameters.wg-server-ip >>
+        WG_SRV_IP: << parameters.wg-server-ip >>
       name: Connecting to WireGuard server
       command: <<include(scripts/connect.sh)>>

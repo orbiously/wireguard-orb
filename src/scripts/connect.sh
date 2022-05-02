@@ -94,7 +94,7 @@ connect-linux() {
 
   sudo wg-quick up wg0
 
-  until ping -c1 "$WG-SRV-IP"; do
+  until ping -c1 "$WG_SRV_IP"; do
     echo "Attempting to connect..."
     sleep 1;
   done
@@ -153,7 +153,7 @@ EOF
     sleep 1
   done
 
-  until ping -c1 "$WG-SRV-IP"; do
+  until ping -c1 "$WG_SRV_IP"; do
     echo "Attempting to connect..."
     sleep 1;
   done
@@ -167,7 +167,7 @@ connect-windows() {
 
   /c/progra~1/wireguard/wireguard.exe //installtunnelservice "C:\tmp\wg0.conf"
 
-  until ping -n 1 "$WG-SRV-IP"; do
+  until ping -n 1 "$WG_SRV_IP"; do
     echo "Attempting to connect..."
     sleep 1;
   done
