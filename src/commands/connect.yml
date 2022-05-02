@@ -3,15 +3,15 @@ description: >
 
 parameters:
   config-var:
-    description: Name of the environment variable containing the base64-encoded WireGuard client configuration file.
+    description: Name of the environment variable containing the base64-encoded configuration file of your WireGuard client 
     type: env_var_name
     default: WG_CONFIG
   wg-server-ip:
-    description: WireGuard (private) IP address of the WireGuard server.
+    description: Private IP address (i.e, in the WireGuard network) of the WireGuard server.
     type: string
     default: "10.0.0.1"
   timeout:
-    description: Maximum time to establish the connection with the WireGuard server
+    description: Maximum allocated time (in seconds) to establish the connection with the WireGuard server.
     type: integer
     default: 5
 
