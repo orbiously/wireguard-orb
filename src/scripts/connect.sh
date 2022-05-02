@@ -94,7 +94,7 @@ connect-linux() {
 
   sudo wg-quick up wg0
 
-  ping_command=(ping -c1 "$WG_SRV_IP")
+  ping_command="ping -c1 $WG_SRV_IP"
 }
 
 connect-macos() {
@@ -150,7 +150,7 @@ EOF
     sleep 1
   done
 
-  ping_command=(ping -c1 "$WG_SRV_IP")
+  ping_command="ping -c1 $WG_SRV_IP"
 }
 
 connect-windows() {
@@ -161,21 +161,18 @@ connect-windows() {
 
   /c/progra~1/wireguard/wireguard.exe //installtunnelservice "C:\tmp\wg0.conf"
 
-  ping_command=(ping -n1 "$WG_SRV_IP")
+  ping_command="ping -n1 $WG_SRV_IP"
 }
 
 connect-"$EXECUTOR"
 
 counter=0
-  echo "${ping_command[@]}"
-  until ("${ping_command[@]}") || [ "$counter" -ge $((TIMEOUT-1)) ]; do
-    ((counter++))
-    echo "Counter is $counter"
+  until ("$ping_command") || [ "$counter" -eq $((TIMEOUT-1)) ]; do
     echo "Attempting to connect..."
     sleep 1;
   done
 
-  if (! "${ping_command[@]}"); then
+  if (! "$ping_command"); then
     printf "\nUnable to establish connection within the allocated time ---> Giving up.\n"
   else
     echo "Connected to WireGuard"
