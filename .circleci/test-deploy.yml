@@ -30,6 +30,7 @@ jobs:
       steps:
         - wireguard/connect:
             config-var: WG_CONFIG_MAC
+            timeout: 1
         - wireguard/disconnect
 workflows:
   test-deploy:
