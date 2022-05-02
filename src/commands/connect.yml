@@ -10,6 +10,10 @@ parameters:
     description: WireGuard (private) IP address of the WireGuard server.
     type: string
     default: "10.0.0.1"
+  timeout:
+    description: Maximum time to establish the connection with the WireGuard server
+    type: integer
+    default: 5
 
 steps:
   - run:
@@ -17,5 +21,6 @@ steps:
       environment:
         CONFIG: << parameters.config-var >>
         WG_SRV_IP: << parameters.wg-server-ip >>
+        TIMEOUT: << parameters.timeout >>
       name: Connecting to WireGuard server
       command: <<include(scripts/connect.sh)>>

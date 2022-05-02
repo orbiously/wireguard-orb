@@ -94,10 +94,7 @@ connect-linux() {
 
   sudo wg-quick up wg0
 
-  until ping -c1 "$WG_SRV_IP"; do
-    echo "Attempting to connect..."
-    sleep 1;
-  done
+  ping_command="ping -c"
 }
 
 connect-macos() {
@@ -153,10 +150,7 @@ EOF
     sleep 1
   done
 
-  until ping -c1 "$WG_SRV_IP"; do
-    echo "Attempting to connect..."
-    sleep 1;
-  done
+  ping_command="ping -c"
 }
 
 connect-windows() {
@@ -167,16 +161,23 @@ connect-windows() {
 
   /c/progra~1/wireguard/wireguard.exe //installtunnelservice "C:\tmp\wg0.conf"
 
-  until ping -n 1 "$WG_SRV_IP"; do
-    echo "Attempting to connect..."
-    sleep 1;
-  done
+  ping_command="ping -n"
 }
 
 connect-"$EXECUTOR"
 
-echo "Connected to WireGuard"
-printf "\nPublic IP is now %s\n" "$(curl -s http://checkip.amazonaws.com)"
+counter=0
+  until "${ping_command}"1 "$WG_SRV_IP" || [ "$counter" -eq $((TIMEOUT)) ]; do
+    echo "Attempting to connect..."
+    sleep 1;
+  done
+
+  if ! "${ping_command}"1 "$WG_SRV_IP"; then
+    printf "\nUnable to establish connection within the allocated time ---> Giving up.\n"
+  else
+    echo "Connected to WireGuard"
+    printf "\nPublic IP is now %s\n" "$(curl -s http://checkip.amazonaws.com)"
+  fi
 
 echo "export PLATFORM=$PLATFORM" >> "$BASH_ENV"
 echo "export EXECUTOR=$EXECUTOR" >> "$BASH_ENV"
