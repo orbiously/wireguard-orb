@@ -8,47 +8,41 @@ case "$(uname)" in
       EXECUTOR=linux
     fi
     PLATFORM=Linux
+    ping_command=(ping -c1 "$WG_SRV_IP")
+    check_install=(wg --version 2>/dev/null)
     ;;
   [Dd]arwin*)
     PLATFORM=macOS
     EXECUTOR=macos
+    ping_command=(ping -n 1 "$WG_SRV_IP")
+    check_install=(wg --version 2>/dev/null)
     ;;
   msys*|MSYS*|nt|win*)
     PLATFORM=Windows
     EXECUTOR=windows
+    ping_command=(ping -c1 "$WG_SRV_IP")
+    check_install=(/c/progra~1/wireguard/wg.exe --version 2>/dev/null)
     ;;
 esac
 
 install-Linux() {
-  if wg --version 2>/dev/null; then
-    printf "WireGuard is already installed\n\n"
-  else
-    printf "Installing WireGuard for Linux\n\n"
-    sudo apt-get update
-    sudo apt-get install -y wireguard-tools resolvconf
-    printf "\nWireGuard for %s installed\n\n" "$PLATFORM"
-  fi
+  printf "Installing WireGuard for Linux\n\n"
+  sudo apt-get update
+  sudo apt-get install -y wireguard-tools resolvconf
+  printf "\nWireGuard for %s installed\n\n" "$PLATFORM"
 }
 
 install-macOS() {
-  if wg --version 2>/dev/null; then
-    printf "WireGuard is already installed\n\n"
-  else
-    printf "Installing WireGuard for macOS\n\n"
-    HOMEBREW_NO_AUTO_UPDATE=1 brew install wireguard-tools
-    sudo sed -i '' 's/\/usr\/bin\/env[[:space:]]bash/\/usr\/local\/bin\/bash/' /usr/local/Cellar/wireguard-tools/1.0.20210914/bin/wg-quick
-    printf "\nWireGuard for %s installed\n\n" "$PLATFORM"
-  fi
+  printf "Installing WireGuard for macOS\n\n"
+  HOMEBREW_NO_AUTO_UPDATE=1 brew install wireguard-tools
+  sudo sed -i '' 's/\/usr\/bin\/env[[:space:]]bash/\/usr\/local\/bin\/bash/' /usr/local/Cellar/wireguard-tools/1.0.20210914/bin/wg-quick
+  printf "\nWireGuard for %s installed\n\n" "$PLATFORM"
 }
 
 install-Windows() {
-  if /c/progra~1/wireguard/wg.exe --version 2>/dev/null; then
-    printf "WireGuard is already installed\n\n"
-  else
-    printf "Installing WireGuard for Windows\n\n"
-    choco install wireguard
-    printf "\nWireGuard for %s installed\n" "$PLATFORM"
-  fi
+  printf "Installing WireGuard for Windows\n\n"
+  choco install wireguard
+  printf "\nWireGuard for %s installed\n" "$PLATFORM"
 }
 
 configure-Linux() {
@@ -63,7 +57,11 @@ configure-Windows() {
   echo "${!CONFIG}" | base64 --decode > "C:\tmp\wg0.conf"
 }
 
-install-$PLATFORM
+if "${check_install[@]}"; then
+  printf "WireGuard is already installed\n"
+else
+  install-$PLATFORM
+fi
 
 configure-$PLATFORM
 printf "\nWireGuard for %s configured\n" "$PLATFORM"
@@ -93,8 +91,6 @@ connect-linux() {
   done
 
   sudo wg-quick up wg0
-
-  ping_command=(ping -c1 "$WG_SRV_IP")
 }
 
 connect-macos() {
@@ -149,8 +145,6 @@ EOF
   until sudo launchctl list | grep wireguard; do
     sleep 1
   done
-
-  ping_command=(ping -c1 "$WG_SRV_IP")
 }
 
 connect-windows() {
@@ -160,8 +154,6 @@ connect-windows() {
   route add "$ET_phone_home" MASK 255.255.255.255 "$DEFAULT_GW"
 
   /c/progra~1/wireguard/wireguard.exe //installtunnelservice "C:\tmp\wg0.conf"
-
-  ping_command=(ping -n 1 "$WG_SRV_IP")
 }
 
 connect-"$EXECUTOR"
