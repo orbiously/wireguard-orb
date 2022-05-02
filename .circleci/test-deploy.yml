@@ -23,7 +23,7 @@ jobs:
         - run: choco install wireguard
         - wireguard/connect:
             config-var: WG_CONFIG_WIN
-            timeout: 1
+            timeout: 0
         - wireguard/disconnect
     command-tests-macos:
       macos:
