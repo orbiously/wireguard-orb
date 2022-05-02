@@ -161,7 +161,7 @@ connect-windows() {
 
   /c/progra~1/wireguard/wireguard.exe //installtunnelservice "C:\tmp\wg0.conf"
 
-  ping_command=('ping -n1' "$WG_SRV_IP")
+  ping_command=(ping -n 1 "$WG_SRV_IP")
 }
 
 connect-"$EXECUTOR"
