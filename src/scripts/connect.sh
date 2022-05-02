@@ -47,7 +47,7 @@ install-Windows() {
   else
     printf "Installing WireGuard for Windows\n\n"
     choco install wireguard
-    printf "\nWireGuard for %s installed\n\n" "$PLATFORM"
+    printf "\nWireGuard for %s installed\n" "$PLATFORM"
   fi
 }
 
@@ -66,9 +66,9 @@ configure-Windows() {
 install-$PLATFORM
 
 configure-$PLATFORM
-printf "\nWireGuard for %s configured\n\n" "$PLATFORM"
+printf "\nWireGuard for %s configured\n" "$PLATFORM"
 
-printf "\nPublic IP before VPN connection is %s\n" "$(curl -s http://checkip.amazonaws.com)"
+printf "\nPublic IP before VPN connection is %s\n\n" "$(curl -s http://checkip.amazonaws.com)"
 
 connect-linux() {
   ET_phone_home=$(ss -Hnto state established '( sport = :ssh )' | head -n1 | awk '{ split($4, a, ":"); print a[1] }')
