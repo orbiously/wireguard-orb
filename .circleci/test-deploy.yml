@@ -13,6 +13,9 @@ jobs:
       machine:
         image: ubuntu-2004:202201-02
       steps:
+        - run: |
+            sudo apt-get update
+            sudo apt-get install -y wireguard-tools resolvconf
         - wireguard/connect:
             config-var: WG_CONFIG_LIN
         - wireguard/disconnect
