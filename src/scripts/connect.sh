@@ -26,6 +26,7 @@ install-Linux() {
     printf "Installing WireGuard for Linux\n\n"
     sudo apt-get update
     sudo apt-get install -y wireguard-tools resolvconf
+    printf "\nWireGuard for %s installed\n\n" "$PLATFORM"
   fi
 }
 
@@ -36,6 +37,7 @@ install-macOS() {
     printf "Installing WireGuard for macOS\n\n"
     HOMEBREW_NO_AUTO_UPDATE=1 brew install wireguard-tools
     sudo sed -i '' 's/\/usr\/bin\/env[[:space:]]bash/\/usr\/local\/bin\/bash/' /usr/local/Cellar/wireguard-tools/1.0.20210914/bin/wg-quick
+    printf "\nWireGuard for %s installed\n\n" "$PLATFORM"
   fi
 }
 
@@ -45,6 +47,7 @@ install-Windows() {
   else
     printf "Installing WireGuard for Windows\n\n"
     choco install wireguard
+    printf "\nWireGuard for %s installed\n\n" "$PLATFORM"
   fi
 }
 
@@ -61,7 +64,6 @@ configure-Windows() {
 }
 
 install-$PLATFORM
-printf "\nWireGuard for %s installed\n\n" "$PLATFORM"
 
 configure-$PLATFORM
 printf "\nWireGuard for %s configured\n\n" "$PLATFORM"

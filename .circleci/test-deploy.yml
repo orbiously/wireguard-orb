@@ -13,9 +13,6 @@ jobs:
       machine:
         image: ubuntu-2004:202201-02
       steps:
-        - run: |
-            sudo apt-get update
-            sudo apt-get install -y wireguard-tools resolvconf
         - wireguard/connect:
             config-var: WG_CONFIG_LIN
         - wireguard/disconnect
@@ -23,6 +20,7 @@ jobs:
       executor:
         name: win/default
       steps:
+        - run: choco install wireguard
         - wireguard/connect:
             config-var: WG_CONFIG_WIN
         - wireguard/disconnect
