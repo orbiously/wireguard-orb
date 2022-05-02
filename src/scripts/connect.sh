@@ -14,13 +14,13 @@ case "$(uname)" in
   [Dd]arwin*)
     PLATFORM=macOS
     EXECUTOR=macos
-    ping_command=(ping -n 1 "$WG_SRV_IP")
+    ping_command=(ping -c1 "$WG_SRV_IP")
     check_install=(wg --version)
     ;;
   msys*|MSYS*|nt|win*)
     PLATFORM=Windows
     EXECUTOR=windows
-    ping_command=(ping -c1 "$WG_SRV_IP")
+    ping_command=(ping -n 1 "$WG_SRV_IP")
     check_install=(/c/progra~1/wireguard/wg.exe --version)
     ;;
 esac
