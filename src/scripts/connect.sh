@@ -20,7 +20,7 @@ case "$(uname)" in
 esac
 
 install-Linux() {
-  if wg --version 2>&1  > /dev/null; then
+  if wg --version 2>/dev/null; then
     printf "WireGuard is already installed\n\n"
   else
     printf "Installing WireGuard for Linux\n\n"
@@ -30,7 +30,7 @@ install-Linux() {
 }
 
 install-macOS() {
-  if wg --version 2>&1  > /dev/null; then
+  if wg --version 2>/dev/null; then
     printf "WireGuard is already installed\n\n"
   else
     printf "Installing WireGuard for macOS\n\n"
@@ -40,7 +40,7 @@ install-macOS() {
 }
 
 install-Windows() {
-  if /c/progra~1/wireguard/wireguard.exe --version; then
+  if /c/progra~1/wireguard/wireguard.exe --version 2>/dev/null; then
     printf "WireGuard is already installed\n\n"
   else
     printf "Installing WireGuard for Windows\n\n"
