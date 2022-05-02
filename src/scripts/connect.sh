@@ -168,6 +168,7 @@ connect-"$EXECUTOR"
 
 counter=0
   until "${ping_command[@]}" || [ "$counter" -eq $((TIMEOUT)) ]; do
+    ((counter++))
     echo "Attempting to connect..."
     sleep 1;
   done
