@@ -42,7 +42,7 @@ install-macOS() {
 }
 
 install-Windows() {
-  if /c/progra~1/wireguard/wireguard.exe --version 2>/dev/null; then
+  if /c/progra~1/wireguard/wg.exe --version 2>/dev/null; then
     printf "WireGuard is already installed\n\n"
   else
     printf "Installing WireGuard for Windows\n\n"
