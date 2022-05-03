@@ -3,7 +3,7 @@ description: >
 
 parameters:
   config-var:
-    description: Name of the environment variable containing the base64-encoded configuration file of your WireGuard client 
+    description: Name of the environment variable containing the base64-encoded configuration file of your WireGuard client.
     type: env_var_name
     default: WG_CONFIG
   wg-server-ip:
