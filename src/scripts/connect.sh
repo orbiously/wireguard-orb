@@ -3,6 +3,8 @@ case "$(uname)" in
   [Ll]inux*)
     if [ -f /.dockerenv ]; then
       EXECUTOR=docker
+      printf "The WireGuard orb doesn not support the 'docker' executor.\n"
+      printf "Please use the Linux 'machine' executor instead."
       exit 1
     else
       EXECUTOR=linux
