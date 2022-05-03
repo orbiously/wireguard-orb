@@ -22,7 +22,6 @@ jobs:
       steps:
         - wireguard/connect:
             config-var: WG_CONFIG_WIN
-            timeout: 0
         - wireguard/disconnect
     command-tests-macos:
       macos:
