@@ -167,7 +167,7 @@ counter=0
     sleep 1;
   done
 
-  if (! "${ping_command[@]}"); then
+  if (! "${ping_command[@]}" > /dev/null); then
     printf "\nUnable to establish connection within the allocated time ---> Giving up.\n"
   else
     printf "\nConnected to WireGuard\n"
