@@ -154,8 +154,8 @@ connect-windows() {
 
 connect-"$EXECUTOR"
 
-counter=0
-  until "${ping_command[@]}" || [ "$counter" -ge $((TIMEOUT-1)) ]; do
+counter=1
+  until "${ping_command[@]}" || [ "$counter" -ge $((TIMEOUT)) ]; do
     ((counter++))
     echo "Attempting to connect..."
     sleep 1;
