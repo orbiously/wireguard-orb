@@ -52,7 +52,7 @@ configure-Linux() {
 }
 
 configure-macOS() {
-  echo "${!CONFIG}" | sudo bash -c 'base64 --decode > /tmp/wg0.conf'
+  echo "${!CONFIG}" | base64 --decode > /tmp/wg0.conf
 }
 
 configure-Windows() {
