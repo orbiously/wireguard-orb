@@ -115,9 +115,7 @@ connect-macos() {
     do
       sudo route -n add -net "$IP/32" "$DEFAULT_GW"
   done
-  
-  touch /tmp/wireguard.log
-  
+    
 cat << EOF | sudo tee /Library/LaunchDaemons/com.wireguard.wg0.plist 1>/dev/null
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
