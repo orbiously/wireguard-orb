@@ -131,10 +131,6 @@ cat << EOF | sudo tee /Library/LaunchDaemons/com.wireguard.wg0.plist 1>/dev/null
       <string>up</string>
       <string>/tmp/wg0.conf</string>
     </array>
-    <key>StandardErrorPath</key>
-      <string>/tmp/wireguard.log</string>
-    <key>StandardOutPath</key>
-      <string>/tmp/wireguard.log</string>
   </dict>
 </plist>
 EOF
