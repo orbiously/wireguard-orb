@@ -53,6 +53,7 @@ configure-Linux() {
 
 configure-macOS() {
   echo "${!CONFIG}" | base64 --decode > /tmp/wg0.conf
+  chmod 600 /tmp/wg0.conf
 }
 
 configure-Windows() {
