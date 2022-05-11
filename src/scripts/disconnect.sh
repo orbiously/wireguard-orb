@@ -19,5 +19,5 @@ if "${disconnect_command[@]}"; then
 fi
 
 if "${cleanup_command[@]}"; then
-  printf "WireGuard configuration file deleted\n"
+  printf "WireGuard client configuration file deleted\n"
 fi
