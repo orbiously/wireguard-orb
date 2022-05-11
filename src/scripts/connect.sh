@@ -164,7 +164,7 @@ counter=1
   if (! "${ping_command[@]}" > /dev/null); then
     printf "\nUnable to establish connection within the allocated time ---> Giving up.\n"
   else
-    printf "\nConnected to WireGuard\n"
+    printf "\nConnected to WireGuard server\n"
     printf "\nPublic IP is now %s\n" "$(curl -s http://checkip.amazonaws.com)"
   fi
 
