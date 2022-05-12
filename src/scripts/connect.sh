@@ -49,11 +49,13 @@ install-Windows() {
 
 configure-Linux() {
   echo "${!CONFIG}" | sudo bash -c 'base64 --decode > /etc/wireguard/wg0.conf'
+  sudo chmod 600 /tmp/wg0.conf
 }
 
 configure-macOS() {
-  echo "${!CONFIG}" | base64 --decode > /tmp/wg0.conf
-  chmod 600 /tmp/wg0.conf
+  sudo mkdir /etc/wireguard
+  echo "${!CONFIG}" |  sudo bash -c 'base64 --decode > /etc/wireguard/wg0.conf'
+  sudo chmod 600 /tmp/wg0.conf
 }
 
 configure-Windows() {
@@ -128,7 +130,7 @@ cat << EOF | sudo tee /Library/LaunchDaemons/com.wireguard.wg0.plist 1>/dev/null
     <array>
       <string>/usr/local/bin/wg-quick</string>
       <string>up</string>
-      <string>/tmp/wg0.conf</string>
+      <string>wg0</string>
     </array>
   </dict>
 </plist>
