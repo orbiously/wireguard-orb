@@ -5,8 +5,8 @@ case "$EXECUTOR" in
     cleanup_command=(sudo rm -f /etc/wireguard/wg0.conf)
     ;;
   macos)
-    disconnect_command=(sudo wg-quick down /tmp/wg0.conf)
-    cleanup_command=(rm -f /tmp/wg0.conf)
+    disconnect_command=(sudo launchctl stop com.wireguard.wg0)
+    cleanup_command=sudo rm -f /etc/wireguard/wg0.conf)
     ;;
   windows)
     disconnect_command=(/c/progra~1/wireguard/wireguard.exe //uninstalltunnelservice wg0)
