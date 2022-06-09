@@ -76,7 +76,9 @@ printf "\nPublic IP before VPN connection is %s\n\n" "$(curl -s http://checkip.a
 connect-linux() {
   ET_phone_home=$(ss -Hnto state established '( sport = :ssh )' | head -n1 | awk '{ split($4, a, ":"); print a[1] }')
   DEFAULT_GW="$(ip route show default|awk '{print $3}')"
-  echo "Default gateway is $DEFAULT_GW"
+  echo "Initial default gateway is $DEFAULT_GW"
+
+  sudo ip route add 169.254.0.0/16 via "$DEFAULT_GW"
 
   if [ -n "$ET_phone_home" ]; then
     sudo ip route add "$ET_phone_home"/32 via "$DEFAULT_GW"
