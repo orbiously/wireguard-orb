@@ -79,6 +79,7 @@ connect-linux() {
   echo "Initial default gateway is $DEFAULT_GW"
 
   sudo ip route add 169.254.0.0/16 via "$DEFAULT_GW"
+  echo "Added route to 169.254.0.0/16 via default gateway"
 
   if [ -n "$ET_phone_home" ]; then
     sudo ip route add "$ET_phone_home"/32 via "$DEFAULT_GW"
@@ -102,7 +103,8 @@ connect-linux() {
 
 connect-macos() {
   DEFAULT_GW="$(route -n get default|grep gateway| awk '{print $2}')"
-            
+  echo "Initial default gateway is $DEFAULT_GW"
+
   sudo route -n add -net 169.254.0.0/16 "$DEFAULT_GW"
   
   for RESCONF_DNS in $(scutil --dns | grep 'nameserver\[[0-9]*\]'|sort -u|awk '{print$3}')
@@ -149,11 +151,17 @@ EOF
 }
 
 connect-windows() {
-  ET_phone_home=$(netstat -an | grep ':22 .*ESTABLISHED' | head -n1 | awk '{ split($3, a, ":"); print a[1] }') 
   DEFAULT_GW=$(ipconfig|grep "Default" | awk -F ': ' '{print$2}'| grep -v -e '^[[:blank:]]*$')
-  route add 169.254.0.0 MASK 255.255.0.0 "$DEFAULT_GW"
-  route add "$ET_phone_home" MASK 255.255.255.255 "$DEFAULT_GW"
+  echo "Initial default gateway is $DEFAULT_GW"
 
+  route add 169.254.0.0 MASK 255.255.0.0 "$DEFAULT_GW"
+  echo "Added route to 169.254.0.0/16 via default gateway"
+
+  ET_phone_home=$(netstat -an | grep ':22 .*ESTABLISHED' | head -n1 | awk '{ split($3, a, ":"); print a[1] }') 
+  if [ -n "$ET_phone_home" ]; then
+    route add "$ET_phone_home" MASK 255.255.255.255 "$DEFAULT_GW"
+    echo "Added route to $ET_phone_home/32 via default gateway"
+  fi
   /c/progra~1/wireguard/wireguard.exe //installtunnelservice "C:\tmp\wg0.conf"
 }
 
