@@ -97,13 +97,13 @@ connect-windows() {
   /c/progra~1/wireguard/wireguard.exe //installtunnelservice "C:\tmp\wg0.conf"
 }
 
-printf "\nPublic IP before VPN connection is %s\n\n" "$(curl -s http://checkip.amazonaws.com)"
+printf "\nPublic IP before VPN connection is %s\n\n" "$(curl -s https://checkip.amazonaws.com)"
 connect-"$WG_CLIENT_EXECUTOR"
 
 counter=1
   until "${ping_command[@]}" || [ "$counter" -ge $((TIMEOUT)) ]; do
     ((counter++))
-    echo "Attempting to connect..."
+    printf "\nAttempting to connect...\n"
     sleep 1;
   done
 
@@ -111,5 +111,5 @@ counter=1
     printf "\nUnable to establish connection within the allocated time ---> Giving up.\n"
   else
     printf "\nConnected to WireGuard server\n"
-    printf "\nPublic IP is now %s\n" "$(curl -s http://iconfig.co)"
+    printf "\nPublic IP is now %s\n" "$(curl -s https://checkip.amazonaws.com)"
   fi
