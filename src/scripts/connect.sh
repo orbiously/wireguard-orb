@@ -49,7 +49,6 @@ install-Windows() {
 
 configure-Linux() {
   echo "${!CONFIG}" | sudo bash -c 'base64 --decode > /etc/wireguard/wg0.conf'
-  sudo chmod 600 /tmp/wg0.conf
 }
 
 configure-macOS() {
