@@ -2,27 +2,27 @@
 case "$(uname)" in
   [Ll]inux*)
     if [ -f /.dockerenv ]; then
-      EXECUTOR=docker
+      WG_CLIENT_EXECUTOR=docker
       printf "The WireGuard orb doesn not support the 'docker' executor.\n"
       printf "Please use the Linux 'machine' executor instead."
       exit 1
     else
-      EXECUTOR=linux
+      WG_CLIENT_EXECUTOR=linux
     fi
-    PLATFORM=Linux
-    ping_command=(ping -c1 "$WG_SRV_IP")
+    WG_CLIENT_PLATFORM=Linux
+    ping_command=(ping -c1 "$WG_SERVER_IP")
     check_install=(wg --version)
     ;;
   [Dd]arwin*)
-    PLATFORM=macOS
-    EXECUTOR=macos
-    ping_command=(ping -c1 "$WG_SRV_IP")
+    WG_CLIENT_PLATFORM=macOS
+    WG_CLIENT_EXECUTOR=macos
+    ping_command=(ping -c1 "$WG_SERVER_IP")
     check_install=(wg --version)
     ;;
   msys*|MSYS*|nt|win*)
-    PLATFORM=Windows
-    EXECUTOR=windows
-    ping_command=(ping -n 1 "$WG_SRV_IP")
+    WG_CLIENT_PLATFORM=Windows
+    WG_CLIENT_EXECUTOR=windows
+    ping_command=(ping -n 1 "$WG_SERVER_IP")
     check_install=(/c/progra~1/wireguard/wg.exe --version)
     ;;
 esac
@@ -31,44 +31,44 @@ install-Linux() {
   printf "Installing WireGuard for Linux\n\n"
   sudo apt-get update
   sudo apt-get install -y wireguard-tools resolvconf
-  printf "\nWireGuard for %s installed\n\n" "$PLATFORM"
+  printf "\nWireGuard for %s installed\n\n" "$WG_CLIENT_PLATFORM"
 }
 
 install-macOS() {
   printf "Installing WireGuard for macOS\n\n"
   HOMEBREW_NO_AUTO_UPDATE=1 brew install wireguard-tools
   sudo sed -i '' 's/\/usr\/bin\/env[[:space:]]bash/\/usr\/local\/bin\/bash/' /usr/local/Cellar/wireguard-tools/1.0.20210914/bin/wg-quick
-  printf "\nWireGuard for %s installed\n\n" "$PLATFORM"
+  printf "\nWireGuard for %s installed\n\n" "$WG_CLIENT_PLATFORM"
 }
 
 install-Windows() {
   printf "Installing WireGuard for Windows\n\n"
   choco install wireguard
-  printf "\nWireGuard for %s installed\n" "$PLATFORM"
+  printf "\nWireGuard for %s installed\n" "$WG_CLIENT_PLATFORM"
 }
 
 configure-Linux() {
-  echo "${!CONFIG}" | sudo bash -c 'base64 --decode > /etc/wireguard/wg0.conf'
+  echo "${!CLIENT_CONFIG}" | sudo bash -c 'base64 --decode > /etc/wireguard/wg0.conf'
 }
 
 configure-macOS() {
   sudo mkdir /etc/wireguard
-  echo "${!CONFIG}" |  sudo bash -c 'base64 --decode > /etc/wireguard/wg0.conf'
+  echo "${!CLIENT_CONFIG}" |  sudo bash -c 'base64 --decode > /etc/wireguard/wg0.conf'
   sudo chmod 600 /tmp/wg0.conf
 }
 
 configure-Windows() {
-  echo "${!CONFIG}" | base64 --decode > "C:\tmp\wg0.conf"
+  echo "${!CLIENT_CONFIG}" | base64 --decode > "C:\tmp\wg0.conf"
 }
 
 if "${check_install[@]}" 2>/dev/null; then
   printf "WireGuard is already installed\n"
 else
-  install-$PLATFORM
+  install-$WG_CLIENT_PLATFORM
 fi
 
-configure-$PLATFORM
-printf "\nWireGuard for %s configured\n" "$PLATFORM"
+configure-$WG_CLIENT_PLATFORM
+printf "\nWireGuard for %s configured\n" "$WG_CLIENT_PLATFORM"
 
 printf "\nPublic IP before VPN connection is %s\n\n" "$(curl -s http://checkip.amazonaws.com)"
 
@@ -164,7 +164,7 @@ connect-windows() {
   /c/progra~1/wireguard/wireguard.exe //installtunnelservice "C:\tmp\wg0.conf"
 }
 
-connect-"$EXECUTOR"
+connect-"$WG_CLIENT_EXECUTOR"
 
 counter=1
   until "${ping_command[@]}" || [ "$counter" -ge $((TIMEOUT)) ]; do
@@ -180,5 +180,5 @@ counter=1
     printf "\nPublic IP is now %s\n" "$(curl -s http://iconfig.co)"
   fi
 
-echo "export PLATFORM=$PLATFORM" >> "$BASH_ENV"
-echo "export EXECUTOR=$EXECUTOR" >> "$BASH_ENV"
+echo "export PLATFORM=$WG_CLIENT_PLATFORM" >> "$BASH_ENV"
+echo "export EXECUTOR=$WG_CLIENT_EXECUTOR" >> "$BASH_ENV"
