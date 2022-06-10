@@ -15,7 +15,6 @@ steps:
   - run:
       shell: bash
       environment:
-        CLIENT_CONFIG: << parameters.wg-client-config-var >>
         WG_SERVER_IP: << parameters.wg-server-ip >>
         TIMEOUT: << parameters.timeout >>
       name: Connecting to WireGuard server
