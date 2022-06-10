@@ -1,7 +1,5 @@
 #!/bin/bash
 connect-linux() {
-  ping_command=(ping -c1 "$WG_SERVER_IP")
-
   ET_phone_home=$(ss -Hnto state established '( sport = :ssh )' | head -n1 | awk '{ split($4, a, ":"); print a[1] }')
   DEFAULT_GW="$(ip route show default|awk '{print $3}')"
   echo "Initial default gateway is $DEFAULT_GW"
@@ -30,8 +28,6 @@ connect-linux() {
 }
 
 connect-macos() {
-  ping_command=(ping -c1 "$WG_SERVER_IP")
-
   DEFAULT_GW="$(route -n get default|grep gateway| awk '{print $2}')"
   echo "Initial default gateway is $DEFAULT_GW"
 
@@ -81,8 +77,6 @@ EOF
 }
 
 connect-windows() {
-  ping_command=(ping -n 1 "$WG_SERVER_IP")
-
   DEFAULT_GW=$(ipconfig|grep "Default" | awk -F ': ' '{print$2}'| grep -v -e '^[[:blank:]]*$')
   echo "Initial default gateway is $DEFAULT_GW"
 
@@ -99,6 +93,15 @@ connect-windows() {
 
 printf "\nPublic IP before VPN connection is %s\n\n" "$(curl -s http://checkip.amazonaws.com)"
 connect-"$WG_CLIENT_EXECUTOR"
+
+case "$WG_CLIENT_EXECUTOR" in
+  linux|macos)
+    ping_command=(ping -c1 "$WG_SERVER_IP")
+    ;;
+  windows)
+    ping_command=(ping -n 1 "$WG_SERVER_IP")
+    ;;
+esac
 
 counter=1
   until "${ping_command[@]}" || [ "$counter" -ge $((TIMEOUT)) ]; do

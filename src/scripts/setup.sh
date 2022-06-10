@@ -48,7 +48,6 @@ configure-Linux() {
 configure-macOS() {
   sudo mkdir /etc/wireguard
   echo "${!CLIENT_CONFIG}" |  sudo bash -c 'base64 --decode > /etc/wireguard/wg0.conf'
-  sudo chmod 600 /tmp/wg0.conf
 }
 
 configure-Windows() {
