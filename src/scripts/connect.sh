@@ -171,6 +171,7 @@ counter=1
   else
     printf "\nConnected to WireGuard server\n"
     printf "\nPublic IP is now %s\n" "$(curl -s http://checkip.amazonaws.com)"
+    curl ipinfo.io |jq -r '.ip'
   fi
 
 echo "export PLATFORM=$PLATFORM" >> "$BASH_ENV"
