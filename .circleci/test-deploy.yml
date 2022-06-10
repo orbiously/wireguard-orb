@@ -13,22 +13,25 @@ jobs:
       machine:
         image: ubuntu-2004:202201-02
       steps:
-        - wireguard/connect:
+        - wireguard/setup:
             wg-client-config-var: WG_CONFIG_LIN
+        - wireguard/connect
         - wireguard/disconnect
     command-tests-windows:
       executor:
         name: win/default
       steps:
-        - wireguard/connect:
+        - wireguard/setup:
             wg-client-config-var: WG_CONFIG_WIN
+        - wireguard/disconnect
         - wireguard/disconnect
     command-tests-macos:
       macos:
         xcode: "13.3.0"
       steps:
-        - wireguard/connect:
+        - wireguard/setup:
             wg-client-config-var: WG_CONFIG_MAC
+        - wireguard/connect
         - wireguard/disconnect
 workflows:
   test-deploy:
