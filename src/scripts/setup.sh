@@ -64,5 +64,5 @@ fi
 configure-$WG_CLIENT_PLATFORM
 printf "\nWireGuard for %s configured\n" "$WG_CLIENT_PLATFORM"
 
-echo "export PLATFORM=$WG_CLIENT_PLATFORM" >> "$BASH_ENV"
-echo "export EXECUTOR=$WG_CLIENT_EXECUTOR" >> "$BASH_ENV"
+echo "export WG_CLIENT_PLATFORM=$WG_CLIENT_PLATFORM" >> "$BASH_ENV"
+echo "export WG_CLIENT_EXECUTOR=$WG_CLIENT_EXECUTOR" >> "$BASH_ENV"

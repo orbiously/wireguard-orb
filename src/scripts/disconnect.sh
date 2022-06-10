@@ -1,5 +1,5 @@
 #!/bin/bash
-case "$EXECUTOR" in
+case "$WG_CLIENT_EXECUTOR" in
   linux)
     disconnect_command=(sudo wg-quick down wg0)
     cleanup_command=(sudo rm -f /etc/wireguard/wg0.conf)
