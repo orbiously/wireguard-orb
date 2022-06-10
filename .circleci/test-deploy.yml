@@ -23,7 +23,7 @@ jobs:
       steps:
         - wireguard/setup:
             wg-client-config-var: WG_CONFIG_WIN
-        - wireguard/disconnect
+        - wireguard/connect
         - wireguard/disconnect
     command-tests-macos:
       macos:
