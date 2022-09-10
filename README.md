@@ -31,7 +31,9 @@ Before attempting to use the Wireguard orb , you’ll need to ensure that:
 
 - The WireGuard server can be reached on its configured [ListenPort] (default: 51820) from any [IP address potentially used by CircleCI](https://circleci.com/docs/2.0/ip-ranges/#aws-and-gcp-ip-addresses). 
 
-- The [Peer]'s (WireGuard client) configuration file has been base64-encoded and stored as an environment variable, either in the project settings or in an organization context. By default, the orb's `setup` command expects the base64-encoded configuration file to be stored in an environment variable named `WG_CLIENT_CONFIG`, however you can opt to store it in a custom-named environment variable; in such case, the environment variable's name must be passed to the orb's `setup` command via the `  wg-client-config-var` parameter.
+- The [Peer]'s (WireGuard client) configuration file has been base64-encoded and stored as an environment variable, either in the project settings or in an organization context.
+
+    By default, the orb's `setup` command expects the base64-encoded configuration file to be stored in an environment variable named `WG_CLIENT_CONFIG`, however you can opt to store it in a custom-named environment variable; in such case, the environment variable's name must be passed to the orb's `setup` command via the `  wg-client-config-var` parameter.
 
 
 ## Features
