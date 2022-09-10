@@ -16,7 +16,8 @@ jobs:
       steps:
         - wireguard/setup:
             wg-client-config-var: WG_CONFIG_LIN
-        - wireguard/connect
+        - wireguard/connect:
+            wg-server-ip: "10.0.0.1"
         - wireguard/disconnect
     command-tests-linux:
       machine:
@@ -24,7 +25,8 @@ jobs:
       steps:
         - wireguard/setup:
             wg-client-config-var: WG_CONFIG_LIN
-        - wireguard/connect
+        - wireguard/connect:
+            wg-server-ip: "10.0.0.1"
         - wireguard/disconnect
     command-tests-windows:
       executor:
@@ -32,7 +34,8 @@ jobs:
       steps:
         - wireguard/setup:
             wg-client-config-var: WG_CONFIG_WIN
-        - wireguard/connect
+        - wireguard/connect:
+            wg-server-ip: "10.0.0.1"
         - wireguard/disconnect
     command-tests-macos:
       macos:
@@ -40,7 +43,8 @@ jobs:
       steps:
         - wireguard/setup:
             wg-client-config-var: WG_CONFIG_MAC
-        - wireguard/connect
+        - wireguard/connect:
+            wg-server-ip: "10.0.0.1"
         - wireguard/disconnect
 workflows:
   test-deploy:
