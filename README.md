@@ -53,7 +53,7 @@ The `setup` command will:
 
 The `connect` command will:
 - Add exclusions for CircleCI-specific routes.
-- Connect the WireGuard client to the WireGuard server.
+- Connect the WireGuard client to the specified WireGuard server.
 
 The `disconnect` command will:
 - Disconnect the client from the WireGuard server.
