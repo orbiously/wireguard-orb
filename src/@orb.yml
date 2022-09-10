@@ -1,7 +1,7 @@
 version: 2.1
 
 description: >
-  Establish a VPN connection between your build host and a WireGuard server.
+  Establish a VPN connection between the build-host and a WireGuard server.
 
 display:
   home_url: "https://www.wireguard.com/"
