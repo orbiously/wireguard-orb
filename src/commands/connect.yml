@@ -5,7 +5,6 @@ parameters:
   wg-server-ip:
     description: Private IP address (i.e, in the WireGuard network) of the WireGuard server.
     type: string
-    default: "10.0.0.1"
   timeout:
     description: Maximum allocated time (in seconds) to establish the connection with the WireGuard server.
     type: integer
