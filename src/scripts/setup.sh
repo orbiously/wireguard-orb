@@ -55,14 +55,14 @@ configure-Windows() {
 }
 
 if "${check_install[@]}" 2>/dev/null; then
-  printf "WireGuard is already installed\n"
+  printf "WireGuard for %s is already installed\n" "$WG_CLIENT_PLATFORM"
 else
   install-$WG_CLIENT_PLATFORM
   printf "\nWireGuard for %s installed\n" "$WG_CLIENT_PLATFORM"
 fi
 
 configure-$WG_CLIENT_PLATFORM
-printf "\nWireGuard for %s configured\n" "$WG_CLIENT_PLATFORM"
+printf "\nWireGuard client configured\n"
 
 echo "export WG_CLIENT_PLATFORM=$WG_CLIENT_PLATFORM" >> "$BASH_ENV"
 echo "export WG_CLIENT_EXECUTOR=$WG_CLIENT_EXECUTOR" >> "$BASH_ENV"
