@@ -1,0 +1,9 @@
+description: >
+  This command disconnects the WireGuard client from the WireGuard server.
+
+steps:
+  - run:
+      shell: bash
+      name: Disconnecting from WireGuard server
+      command: <<include(scripts/disconnect.sh)>>
+      when: always

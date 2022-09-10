@@ -1,0 +1,16 @@
+description: >
+  This command installs (if needed ) and configures the WireGuard client.
+
+parameters:
+  wg-client-config-var:
+    description: Name of the environment variable containing the base64-encoded configuration file of your WireGuard client.
+    type: env_var_name
+    default: WG_CLIENT_CONFIG
+
+steps:
+  - run:
+      shell: bash
+      environment:
+        CLIENT_CONFIG: << parameters.wg-client-config-var >>
+      name: Setting up WireGuard client
+      command: <<include(scripts/setup.sh)>>

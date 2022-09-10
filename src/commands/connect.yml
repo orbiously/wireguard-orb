@@ -1,0 +1,20 @@
+description: >
+  This command connects the WireGuard client to the WireGuard server.
+
+parameters:
+  wg-server-ip:
+    description: Private IP address (i.e, in the WireGuard network) of the WireGuard server.
+    type: string
+  timeout:
+    description: Maximum allocated time (in seconds) to establish the connection with the WireGuard server.
+    type: integer
+    default: 10
+
+steps:
+  - run:
+      shell: bash
+      environment:
+        WG_SERVER_IP: << parameters.wg-server-ip >>
+        TIMEOUT: << parameters.timeout >>
+      name: Connecting to WireGuard server
+      command: <<include(scripts/connect.sh)>>
