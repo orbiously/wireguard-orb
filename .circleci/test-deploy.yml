@@ -9,11 +9,11 @@ filters: &filters
     only: /.*/
 
 jobs:
-  command-tests-docker:
-    docker:
-      - image: cimg/base:2022.08
-    resource_class: small
-    steps:
+    command-tests-docker:
+      docker:
+        - image: cimg/base:2022.08
+      resource_class: small
+      steps:
         - wireguard/setup:
             wg-client-config-var: WG_CONFIG_LIN
         - wireguard/connect
