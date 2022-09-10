@@ -12,6 +12,7 @@ jobs:
     command-tests-linux:
       machine:
         image: ubuntu-2004:202201-02
+      resource_class: medium
       steps:
         - wireguard/setup:
             wg-client-config-var: WG_CONFIG_LIN
