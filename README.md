@@ -12,7 +12,7 @@ _Note that traffic between the build-agent and other CircleCI components/service
 ## Executor support
 
 | Linux (`machine`)  | Windows | macOS  | Docker |
-| ------------- | ------------- | ------------- | ------------- |
+| :---: | :---: | :---: | :---: |
 | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :x:  |
 
 ---
