@@ -108,7 +108,9 @@ counter=1
   done
 
   if (! "${ping_command[@]}" > /dev/null); then
-    printf "\nUnable to establish connection within the allocated time ---> Giving up.\n"
+    printf "\nUnable to establish connection with the WireGuard server within the allocated time ---> Giving up.\n"
+    printf "\nMake sure your WireGuard server is up and running, and reachable from any IP address potentially used by CircleCI (https://circleci.com/docs/2.0/ip-ranges/#aws-and-gcp-ip-addresses).\n"
+    exit 1
   else
     printf "\nConnected to WireGuard server\n"
     printf "\nPublic IP is now %s\n" "$(curl -s https://checkip.amazonaws.com)"
