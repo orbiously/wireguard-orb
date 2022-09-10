@@ -1,7 +1,7 @@
 version: 2.1
 
 description: >
-  Establish a VPN connection between the build-host and a WireGuard server.
+  Establish a VPN connection between the build-host and a WireGuard server. Traffic to IP addresses/ranges specified in the `AllowedIPs` list of the WireGuard client’s configuration file will then be routed through the established WireGuard VPN tunnel.
 
 display:
   home_url: "https://www.wireguard.com/"
