@@ -1,0 +1,25 @@
+description: >
+  Set up the WireGuard client using the base64-encoded configuration file stored in the default environment variable (WG_CLIENT_CONFIG) and allow a `15` seconds timeout to connect to a WireGuard server with private IP "10.0.0.1".
+# Provide a use-case based example for using this orb.
+# Everything in the `usage` section will be displayed in the orb registry.
+# Comments are not retained.
+usage:
+  version: 2.1
+  orbs:
+    <orb-name>: orbiously/wireguard@1.0.0
+
+  jobs:
+    wired-winner:
+      executor:
+        name: win/default
+      steps:
+        - wireguard/setup
+        - wireguard/connect:
+            wg-server-ip: "10.0.0.1"
+            timeout: 15
+        - run: echo "Run some code here"
+        - wireguard/disconnect
+  workflows:
+    ze-guard:
+      jobs:
+        - wired-winner

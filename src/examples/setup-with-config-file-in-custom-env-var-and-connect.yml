@@ -1,0 +1,26 @@
+description: >
+  Set up the WireGuard client using the base64-encoded configuration file in stored in a custom-named environment variable and connect to a WireGuard server with private IP "10.8.0.1".
+# Provide a use-case based example for using this orb.
+# Everything in the `usage` section will be displayed in the orb registry.
+# Comments are not retained.
+usage:
+  version: 2.1
+  orbs:
+    <orb-name>: orbiously/wireguard@1.0.0
+
+  jobs:
+    test-wireguard-connection:
+      machine:
+        image: ubuntu-2004:202201-02
+      resource_class: medium
+      steps:
+        - wireguard/setup:
+            wg-client-config-var: LINUX_CLIENT_CONFIG
+        - wireguard/connect:
+            wg-server-ip: "10.8.0.1"
+        - run: echo "Run some code here"
+        - wireguard/disconnect
+  workflows:
+    twisted-wire:
+      jobs:
+        - test-wireguard-connection
