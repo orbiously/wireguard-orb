@@ -66,7 +66,7 @@ The `disconnect` command will:
 
   This is necessary to avoid networking issues when the WireGuard client is configured to route all traffic through the WireGuard VPN tunnel.
   
-  However, these routes are based on the current architecture of the CircleCI build-environement, which is subject to change over time thus rendering the aforementioned routes exclusions obsolete and ineffective.
+  **However, these routes are based on the current architecture of the CircleCI build-environment, which is subject to change over time thus rendering the aforementioned routes exclusions obsolete and ineffective.**
 
 - When configuring your WireGuard server and choosing an IP range, make sure it doesn't conflict with the build-host's existing network/routing configuration.
 
@@ -86,7 +86,7 @@ This is an [**uncertified** orb](https://circleci.com/docs/orbs-faq#using-uncert
 
 Should you have questions or encounter an issue while using this orb, please:
 
-1. Refer to the "[Caveats & limitations](https://github.com/orbiously/wireguard-orb/README.md#caveats--limitations)" section.
+1. Refer to the "[Caveats & limitations](https://github.com/orbiously/wireguard-orb#caveats--limitations)" section.
 2. Check if there is a similar [existing question/issue](https://github.com/orbiously/wireguard-orb/issues). If so, you can add details about your instance of the issue.
 3. Visit the [Orb category of the CircleCI Discuss community forum](https://discuss.circleci.com/c/orbs). 
 4. If none of the above helps, [open your own issue](https://github.com/orbiously/wireguard-orb/issues/new/choose) with a **detailled** description.
